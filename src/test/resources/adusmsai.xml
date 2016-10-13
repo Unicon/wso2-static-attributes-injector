@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<staticAttributes>
+    <attribute name="schoolCode">
+        <value>123456</value>
+    </attribute>
+    <attribute name="eduPersonAffiliation">
+        <value>member</value>
+        <value>student</value>
+    </attribute>
+</staticAttributes>
