@@ -1,7 +1,7 @@
-WSO2 Static Claims Injector
-===========================
+WSO2 Static Attributes Injector
+===============================
 
-The WSO2 Static Claims Injector supports a short coming in WSO2 Identity Server (IS) in that it can't support hardcoded (i.e. static) attributes that can apply to all users.
+The WSO2 Static Attributes Injector supports a short coming in WSO2 Identity Server (IS) in that it can't support hardcoded (i.e. static) attributes that can apply to all users.
 This plugin allows an IS server admin to specify user properties (attributes) and values that will be applied to all users. This can be handy when a service provider
 needs organization specific information.  
 
@@ -12,7 +12,7 @@ needs organization specific information.
 The following steps are needed to apply this plugin:
 
 1. Build the jar using `mvn clean package`.
-2. Copy `wso2-static-claims-injector-<VERSION>.jar` to `<EIS-CARBON_HOME>/repository/components/lib/`.
+2. Copy `wso2-static-attributes-injector-<VERSION>.jar` to `<EIS-CARBON_HOME>/repository/components/lib/`.
 3. Copy `adusmsai.xml` to `<EIS-CARBON_HOME>/repository/conf/`.
 4. Update `adusmsai.xml` as described below.
 5. Update ...
