@@ -16,6 +16,7 @@
 
 package net.unicon.carbon.user.ldap;
  
+import groovy.lang.GroovyObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.user.core.claim.ClaimManager;
@@ -39,6 +40,10 @@ public class ActiveDirectoryUserStoreManagerStaticAttributeInjector extends Acti
     /** mapping of static attributes */
     private Map<String, List<String>> staticAttributes;
 
+    /** mapping of static attributes */
+    private Map<String, GroovyObject> scriptedAttributes;
+
+
     /**
      * @see ActiveDirectoryUserStoreManager(RealmConfiguration, Map, ClaimManager, ProfileConfigurationManager, UserRealm, Integer)
      */
@@ -49,7 +54,13 @@ public class ActiveDirectoryUserStoreManagerStaticAttributeInjector extends Acti
         super(realmConfig, properties, claimManager, profileManager, realm, tenantId);
 
         log.debug("ActiveDirectoryUserStoreManagerStaticAttributeInjector initializing...");
-        staticAttributes = StaticAttributeInjectorHelper.populateMappingFromFile("repository/conf/adusmsai.xml");;
+
+        staticAttributes = StaticAttributeInjectorHelper.populateMappingFromFile("repository/conf/adusmsai.xml");
+        log.debug(String.format("ActiveDirectoryUserStoreManagerStaticAttributeInjector loaded %d static attribute mappings", staticAttributes.size()));
+
+        scriptedAttributes = ScriptedAttributeInjectorHelper.populateScriptsFromFile("repository/conf/adusmsai.xml");
+        log.debug(String.format("ActiveDirectoryUserStoreManagerStaticAttributeInjector loaded %d scripted attributes", scriptedAttributes.size()));
+
         log.info("ActiveDirectoryUserStoreManagerStaticAttributeInjector initialized");
     }
 
@@ -64,7 +75,9 @@ public class ActiveDirectoryUserStoreManagerStaticAttributeInjector extends Acti
     @Override
     public Map<String, String> getUserPropertyValues(String userName, String[] propertyNames, String profileName) throws UserStoreException {
         Map<String, String> populatedProperties = super.getUserPropertyValues(userName, propertyNames, profileName);
+
         StaticAttributeInjectorHelper.injectMappedAttributes(propertyNames, staticAttributes, populatedProperties);
+        ScriptedAttributeInjectorHelper.injectScriptedAttributes(propertyNames, scriptedAttributes, populatedProperties);
 
         return populatedProperties;
     }
