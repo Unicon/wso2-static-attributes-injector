@@ -1,9 +1,11 @@
 WSO2 Static Attributes Injector
 ===============================
 
-The WSO2 Static Attributes Injector supports a short coming in WSO2 Identity Server (IS) in that it can't support hardcoded (i.e. static) attributes that can apply to all users.
-This plugin allows an IS server admin to specify user properties (attributes) and values that will be applied to all users. This can be handy when a service provider
-needs organization specific information.  
+The WSO2 Static Attributes Injector supports a short coming in WSO2 Identity Server (IS)/Ellucian Identity Services (EIS) in that it
+can't support hardcoded (i.e. static) attributes/claims that apply to all users. It also supports writing Groovy scripts that can 
+manipulate the claims as they are retrieved from Active Directory (AD) and stored in the user's claims "bag".
+This plugin allows an IS server admin to specify user properties (attributes) and values that will be applied to all users. 
+This can be handy when a service provider needs organization specific information or dynamically generated/calculated information.  
 
 > This plugin is designed to work with WSO2 Identity Server 4.2/Ellucian Identity Service 1.1.
  
@@ -17,6 +19,8 @@ The following steps are needed to apply this plugin:
 4. Copy `adusmsai.xml` to `<EIS-CARBON_HOME>/repository/conf/`.
 5. Update `adusmsai.xml` as described below.
 6. Restart the service.
+7. Log into the WSO2 console and define the static and scripted attributes as WSO2 claims (marked them as read-only).
+    > Claims used by the scripted attributes code also need to be defined so that the claims/values are pulled in from AD. 
 
 ## `user-mgt.xml` Settings
 Update `user-mgt.xml` to utilize the `ActiveDirectoryUserStoreManagerStaticAttributeInjector` class instead of 
