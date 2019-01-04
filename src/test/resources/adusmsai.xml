@@ -7,4 +7,8 @@
         <value>member</value>
         <value>student</value>
     </attribute>
+
+    <script src="src/test/resources/test.groovy" />
+    <script src="src/test/resources/test2.groovy" />
+
 </staticAttributes>

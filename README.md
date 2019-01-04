@@ -51,5 +51,48 @@ The following example provides two attributes (schoolCode and eduPersonAffiliati
 </staticAttributes>
 ```
 
+
+### Scripted Attribute Examples
+
+Building upon the previous example, using the script tag will cause WSO2 to import the Groovy scripts and dynamically compile them. The following example reads in two script files
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<staticAttributes>
+    <attribute name="schoolCode">
+        <value>123456</value>
+    </attribute>
+    <attribute name="eduPersonAffiliation">
+        <value>member</value>
+        <value>student</value>
+    </attribute>
+    <script src="repository/conf/script1.groovy"/>
+    <script src="repository/conf/script2.groovy"/>
+</staticAttributes>
+```
+
+Scripts should mimic the following format:
+
+```groovy
+class Test {
+    void update(Map<String, String> populatedProperties) {
+        populatedProperties["groovy"] = "test"
+
+        populatedProperties["groovy2"] = populatedProperties["test1"] + populatedProperties["test2"]
+    }
+}
+```
+
+This example creates two new properties. `groovy` is populated with the value `test`. `groovy2` is populated with the value of the 
+`test1` property concatenated with the value of `test2` attribute/property.
+
+Some notes:
+
+1. The class name is arbitrary but should be unique amongst the other scripted attributes.
+1. The class is expected to have an update method that matches the above signature.
+1. Existing attributes can be read via `populatedProperties["groovy"]`.
+1. Attribute can be set via `populatedProperties["groovy2"]`.
+1. Any changes made to the populatedProperties object will be returned to WSO2.
+
 ## Other UserStoreManager cases
 It should be trivial to clone the `ActiveDirectoryUserStoreManagerStaticAttributeInjector` class so that its logic can support other UserStoreManager implementations.

@@ -88,7 +88,7 @@ public class StaticAttributeInjectorHelper {
             }
 
         } catch(Exception e) {
-            log.error(e);
+            log.error(e.getMessage(), e);
         }
 
         return mapping;
